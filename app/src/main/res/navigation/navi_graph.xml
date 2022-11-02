@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navi_graph"
+    app:startDestination="@+id/favorite_fragment">
+
+    <fragment
+        android:id="@+id/favorite_fragment"
+        android:name="com.maratangsoft.mykaraokebook.FavoriteFragment"
+        tools:layout="@layout/fragment_favorite"/>
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="com.maratangsoft.mykaraokebook.SearchFragment"
+        tools:layout="@layout/fragment_search"/>
+    <fragment
+        android:id="@+id/new_song_fragment"
+        android:name="com.maratangsoft.mykaraokebook.NewSongFragment"
+        tools:layout="@layout/fragment_new_song"/>
+    <fragment
+        android:id="@+id/popular_fragment"
+        android:name="com.maratangsoft.mykaraokebook.PopularFragment"
+        tools:layout="@layout/fragment_popular"/>
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.maratangsoft.mykaraokebook.MapFragment"
+        tools:layout="@layout/fragment_map"/>
+
+</navigation>

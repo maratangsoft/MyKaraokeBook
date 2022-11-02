@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="99999"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Into the Unknown(Frozen2(겨울왕국2) OST)"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:layout_toEndOf="@+id/tv_no"
+        android:layout_marginStart="8dp"/>
+    <TextView
+        android:id="@+id/tv_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="빅나티(서동현),릴러말즈(Prod.빅나티(서동현))"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_toEndOf="@+id/tv_no"
+        android:layout_toStartOf="@+id/tv_memo"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"/>
+    <TextView
+        android:id="@+id/tv_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메모야아아아"
+        android:textSize="14sp"
+        android:lines="1"
+        android:maxEms="6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"/>
+
+</RelativeLayout>

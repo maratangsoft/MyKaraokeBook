@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">내노래방책</string>
+    <string name="bnv_favorite">북마크</string>
+    <string name="bnv_search">곡검색</string>
+    <string name="bnv_new_song">신곡</string>
+    <string name="bnv_popular">인기곡</string>
+    <string name="bnv_map">근처노래방</string>
+    <string name="activity_setting">설정</string>
+</resources>

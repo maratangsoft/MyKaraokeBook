@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/this_month"
+        android:title="이번달"/>
+    <item
+        android:id="@+id/before_1_month"
+        android:title="1달 전"/>
+    <item
+        android:id="@+id/before_2_month"
+        android:title="2달 전"/>
+    <item
+        android:id="@+id/before_3_month"
+        android:title="3달 전"/>
+    <item
+        android:id="@+id/before_4_month"
+        android:title="4달 전"/>
+</menu>
