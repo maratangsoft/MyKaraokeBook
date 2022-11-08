@@ -41,8 +41,8 @@ class FavoriteFragment : Fragment() {
 
     private fun loadData(){
         items.clear()
-        items.add(Item("dd", 1, "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", 1, "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", 1, "dd", "sfsf", "gfwsefe", null))
+        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
+        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
+        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
     }
 }
