@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.maratangsoft.mykaraokebook.databinding.ActivitySettingBinding
 
+var brand = "tj"
+var rowCount = 50
+
 class SettingActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySettingBinding
+
+    private lateinit var binding: ActivitySettingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)

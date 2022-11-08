@@ -20,19 +20,20 @@
                 android:id="@+id/btn_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="▼ 곡명"
+                android:text="▼ 제목"
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 android:padding="8dp"
                 android:background="@drawable/bg_button"/>
             <EditText
                 android:id="@+id/et"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="검색어를 입력하세요..."
                 android:inputType="text"
-                android:padding="7dp"/>
+                android:padding="7dp"
+                android:background="@null"
+                android:imeOptions="actionSearch"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/btn_setting"
