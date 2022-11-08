@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="62dp"
-    android:padding="8dp">
+    android:paddingVertical="8dp"
+    android:paddingEnd="8dp">
 
     <TextView
         android:id="@+id/tv_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99999"
+        android:ems="3"
+        android:gravity="end"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="18sp"

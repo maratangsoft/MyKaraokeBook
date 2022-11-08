@@ -21,7 +21,7 @@ class FavoriteAdapter(val context: Context, var items:MutableList<Item>) : Adapt
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.binding.tvNo.text = items[position].no.toString()
+        holder.binding.tvNo.text = items[position].no
         holder.binding.tvTitle.text = items[position].title
         holder.binding.tvSinger.text = items[position].singer
         holder.binding.tvMemo.text = items[position].memo
@@ -43,7 +43,7 @@ class SearchAdapter(val context: Context, var items:MutableList<Item>) : Adapter
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.binding.tvNo.text = items[position].no.toString()
+        holder.binding.tvNo.text = items[position].no
         holder.binding.tvTitle.text = items[position].title
         holder.binding.tvSinger.text = items[position].singer
     }

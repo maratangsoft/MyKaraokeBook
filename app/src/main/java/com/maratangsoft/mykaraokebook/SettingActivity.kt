@@ -8,18 +8,32 @@ var brand = "tj"
 var rowCount = 50
 
 class SettingActivity : AppCompatActivity() {
+    private val binding by lazy { ActivitySettingBinding.inflate(layoutInflater) }
 
-    private lateinit var binding: ActivitySettingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        when (brand){
+//            "tj" -> binding.radioTj.isChecked
+//            "kumyoung" -> binding.radioKumyoung.isChecked
+//        }
+
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId -> checkRadio(checkedId) }
     }
 
     override fun onNavigateUp(): Boolean {
         finish()
         return super.onNavigateUp()
+    }
+
+    private fun checkRadio(checkedId:Int){
+        when (checkedId){
+            R.id.radio_tj -> brand = "tj"
+            R.id.radio_kumyoung -> brand = "kumyoung"
+        }
     }
 }

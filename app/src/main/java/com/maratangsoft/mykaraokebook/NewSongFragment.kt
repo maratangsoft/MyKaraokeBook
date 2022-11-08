@@ -1,12 +1,12 @@
 package com.maratangsoft.mykaraokebook
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.maratangsoft.mykaraokebook.databinding.FragmentNewSongBinding
 import retrofit2.Call
@@ -14,11 +14,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 class NewSongFragment : Fragment() {
     private lateinit var binding: FragmentNewSongBinding
     private var items: MutableList<Item> = mutableListOf()
-    private var targetMonth = SimpleDateFormat("yyyy-MM").format(Date())
+    private lateinit var result: MutableList<Item>
+    private var targetMonth = SimpleDateFormat("yyyyMM").format(Date())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNewSongBinding.inflate(inflater, container, false)
@@ -27,11 +29,15 @@ class NewSongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recycler.adapter = SearchAdapter(requireActivity(), items)
         binding.btnMonth.setOnClickListener { openPopup() }
         binding.btnMonth.text = SimpleDateFormat("yyyy년 MM월").format(Date())
-        loadData()
+        binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
+        binding.recycler.adapter = SearchAdapter(requireActivity(), items)
+
+        initData()
     }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun openPopup(){
         val popup = PopupMenu(requireActivity(), binding.btnMonth)
@@ -40,7 +46,7 @@ class NewSongFragment : Fragment() {
         for (i in 0..4){
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, -i)
-            popup.menu.getItem(i).title = SimpleDateFormat("yyyy년 MM월").format(calendar.time)
+            popup.menu.getItem(i).title = SimpleDateFormat("yyyy년 M월").format(calendar.time)
         }
 
         popup.setOnMenuItemClickListener {
@@ -54,28 +60,25 @@ class NewSongFragment : Fragment() {
             }
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, monthBefore)
-            binding.btnMonth.text = "▼ "+SimpleDateFormat("yyyy년 MM월").format(calendar.time)
-            targetMonth = SimpleDateFormat("yyyy-MM").format(calendar.time)
-            loadData()
+            binding.btnMonth.text = it.title
+            targetMonth = SimpleDateFormat("yyyyMM").format(calendar.time)
+            initData()
             true
         }
         popup.show()
     }
 
-    private fun loadData(){
+    private fun initData(){
         items.clear()
         binding.recycler.adapter?.notifyDataSetChanged()
 
-        val retrofitService = RetrofitHelper.getInstance().create(RetrofitService::class.java)
-        retrofitService.loadNewSongData(brand).enqueue(object : Callback<MutableList<Item>> {
+        RetrofitHelper.getInstance().create(RetrofitService::class.java)
+        .loadNewSongData(targetMonth, brand).enqueue(object : Callback<MutableList<Item>> {
+
                 override fun onResponse(call: Call<MutableList<Item>>, response: Response<MutableList<Item>>) {
-                    response.body()?.let {
-                        for (item in it){
-                            //목표월에 등록된 곡인지 확인해서 맞으면 리사이클러뷰에 올리기
-                            if (item.release.substring(0,6).equals(targetMonth)){
-                                items.add(item)
-                            }
-                        }
+                    response.body()?.let { result = it }
+                    for (i in 0 until min(rowCount, result.size)) {
+                        items.add(result[i])
                     }
                     binding.recycler.adapter?.notifyDataSetChanged()
                 }
