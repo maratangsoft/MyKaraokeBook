@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="62dp"
-    android:paddingVertical="8dp"
-    android:paddingEnd="8dp">
+    android:paddingVertical="8dp">
 
     <TextView
         android:id="@+id/tv_no"
@@ -11,7 +10,6 @@
         android:layout_height="wrap_content"
         android:text="99999"
         android:ems="3"
-        android:gravity="end"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -26,7 +24,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:layout_toEndOf="@+id/tv_no"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="4dp"/>
     <TextView
         android:id="@+id/tv_singer"
         android:layout_width="wrap_content"
@@ -35,10 +33,9 @@
         android:textSize="14sp"
         android:ellipsize="end"
         android:lines="1"
-        android:layout_toEndOf="@+id/tv_no"
+        android:layout_alignStart="@+id/tv_title"
         android:layout_toStartOf="@+id/tv_memo"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="8dp"/>
+        android:layout_alignParentBottom="true"/>
     <TextView
         android:id="@+id/tv_memo"
         android:layout_width="wrap_content"

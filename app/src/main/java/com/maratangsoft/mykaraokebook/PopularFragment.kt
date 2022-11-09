@@ -31,8 +31,8 @@ class PopularFragment : Fragment() {
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
 
         when (brand){
-            "tj" -> loadTJData()
-            "kumyoung" -> loadKumyoungData()
+            BRAND_TJ -> loadTJData()
+            BRAND_KY -> loadKumyoungData()
         }
     }
 
@@ -58,8 +58,8 @@ class PopularFragment : Fragment() {
             }
             binding.btnNation.text = it.title
             when (brand){
-                "tj" -> loadTJData()
-                "kumyoung" -> loadKumyoungData()
+                BRAND_TJ -> loadTJData()
+                BRAND_KY -> loadKumyoungData()
             }
             true
         }
@@ -71,7 +71,7 @@ class PopularFragment : Fragment() {
         binding.recycler.adapter?.notifyDataSetChanged()
 
         thread {
-            val popularUrl = "https://www.tjmedia.com/tjsong/song_monthPopular.asp?strType=${strType}"
+            val popularUrl = "https://www.tjmedia.com/tjsong/song_monthPopular.asp?strType=$strType"
             try {
                 val doc = Jsoup.connect(popularUrl).get()
                 val table = doc.select("table[class=board_type1] tr")
@@ -101,7 +101,7 @@ class PopularFragment : Fragment() {
         binding.recycler.adapter?.notifyDataSetChanged()
 
         thread {
-            val popularUrl = "https://kysing.kr/genre-polular/?gb=${gb}"
+            val popularUrl = "https://kysing.kr/genre-polular/?gb=$gb"
             try {
                 val doc = Jsoup.connect(popularUrl).get()
                 val chart = doc.select("ul[class=popular_chart_list clear]")

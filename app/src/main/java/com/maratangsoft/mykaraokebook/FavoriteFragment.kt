@@ -11,6 +11,7 @@ import com.maratangsoft.mykaraokebook.databinding.FragmentFavoriteBinding
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private var items:MutableList<Item> = mutableListOf()
+    //private val db = SQLiteDB(requireActivity())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
@@ -23,7 +24,7 @@ class FavoriteFragment : Fragment() {
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
         binding.recycler.adapter = FavoriteAdapter(requireActivity(), items)
 
-        loadData()
+        //db.loadDB(items, binding.recycler.adapter)
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,12 +42,5 @@ class FavoriteFragment : Fragment() {
             true
         }
         popup.show()
-    }
-
-    private fun loadData(){
-        items.clear()
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
     }
 }
