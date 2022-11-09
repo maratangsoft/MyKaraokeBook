@@ -20,7 +20,7 @@ class SQLiteDB(val context:Context) {
 
     init {
         val columns = StringBuilder()
-            .append("$colId        INTEGER         NOT NULL PRIMARY KEY AUTOINCREMENT")
+            .append("$colId        INTEGER         NOT NULL PRIMARY KEY AUTOINCREMENT,")
             .append("$colBrand     VARCHAR(10)     NOT NULL,")
             .append("$colNo        VARCHAR(6)      NOT NULL,")
             .append("$colTitle     TEXT            NOT NULL,")
