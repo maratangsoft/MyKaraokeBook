@@ -15,12 +15,13 @@
             android:id="@+id/btn_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="▼ 2022년 10월"
+            android:text="2022년 10월"
             android:textColor="@color/black"
             android:textSize="17sp"
             android:padding="8dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_button"/>
+            android:background="@drawable/bg_button"
+            app:drawableStartCompat="@drawable/ic_keyboard_arrow_down_24" />
         <ImageView
             android:id="@+id/btn_setting"
             android:layout_width="wrap_content"

@@ -21,8 +21,8 @@ interface RetrofitService {
     @GET("karaoke/{query}/{word}/{brand}.json")
     fun loadSearchData(@Path("query")query:String, @Path("word")word:String, @Path("brand")brand:String): Call<MutableList<Item>>
 
-    @GET("karaoke/{brand}.json")
-    fun loadNewSongData(@Path("brand")brand:String): Call<MutableList<Item>>
+    @GET("karaoke/release/{targetMonth}/{brand}.json")
+    fun loadNewSongData(@Path("targetMonth")targetMonth:String, @Path("brand")brand:String): Call<MutableList<Item>>
 
     @GET("karaoke/{query}/{word}/{brand}.json")
     fun loadSearchDataScalars(@Path("query")query:String, @Path("word")word:String, @Path("brand")brand:String): Call<String>

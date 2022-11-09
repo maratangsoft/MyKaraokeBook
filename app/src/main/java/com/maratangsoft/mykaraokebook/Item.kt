@@ -5,6 +5,6 @@ data class Item(
     val no: String,
     val title: String,
     val singer: String,
-    val release: String,
+    val release: String?,
     var memo: String?
 )

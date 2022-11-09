@@ -6,15 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/navi_host"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/navi_graph"
-        app:defaultNavHost="true"
         android:layout_above="@+id/bnv"
-        tools:layout="@layout/fragment_favorite"/>
+        tools:layout="@layout/fragment_favorite" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv"

@@ -1,5 +1,6 @@
 package com.maratangsoft.mykaraokebook
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupMenu
@@ -8,8 +9,9 @@ import androidx.fragment.app.Fragment
 import com.maratangsoft.mykaraokebook.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment() {
-    lateinit var binding: FragmentFavoriteBinding
-    var items:MutableList<Item> = mutableListOf()
+    private lateinit var binding: FragmentFavoriteBinding
+    private var items:MutableList<Item> = mutableListOf()
+    private val db by lazy { SQLiteDB(requireContext()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
@@ -18,11 +20,14 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recycler.adapter = FavoriteAdapter(requireActivity(), items)
         binding.btnSort.setOnClickListener { openPopup() }
+        binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
+        binding.recycler.adapter = FavoriteAdapter(requireActivity(), items)
 
-        loadData()
+        db.loadDB(items, binding.recycler.adapter)
     }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun openPopup(){
         val popup = PopupMenu(requireActivity(), binding.btnSort)
@@ -37,12 +42,5 @@ class FavoriteFragment : Fragment() {
             true
         }
         popup.show()
-    }
-
-    private fun loadData(){
-        items.clear()
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
-        items.add(Item("dd", "1", "dd", "sfsf", "gfwsefe", null))
     }
 }
