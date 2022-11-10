@@ -21,12 +21,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun clickBnv(menuItem: MenuItem): Boolean {
         val transaction = manager.beginTransaction()
-        for (i in fragments) if(i != null) transaction.hide(i)
+        transaction.remove(fragments[0]!!)
+        for (i in 1..4) fragments[i]?.let { transaction.hide(it) }
 
         when (menuItem.itemId){
             R.id.favorite_fragment -> {
-                transaction.show(fragments[0]!!)
-
+                transaction.add(R.id.container, fragments[0]!!)
             }
             R.id.search_fragment -> {
                 if (fragments[1] == null){
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                     transaction.add(R.id.container, fragments[1]!!)
                 }
                 transaction.show(fragments[1]!!)
-
             }
             R.id.new_song_fragment -> {
                 if (fragments[2] == null){
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                     transaction.add(R.id.container, fragments[2]!!)
                 }
                 transaction.show(fragments[2]!!)
-
             }
             R.id.popular_fragment -> {
                 if (fragments[3] == null){

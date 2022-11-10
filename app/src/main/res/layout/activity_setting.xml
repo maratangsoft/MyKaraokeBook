@@ -20,12 +20,11 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="반주기 설정"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:textSize="20sp"/>
 
         <RadioGroup
             android:id="@+id/radio_group"
@@ -33,13 +32,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="12dp">
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radio_tj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="태진"
                 android:textSize="20sp"/>
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radio_kumyoung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,24 +47,21 @@
                 android:layout_marginStart="12dp"/>
         </RadioGroup>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_reset_bookmark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="북마크 초기화"
-            android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_marginTop="35dp"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_export_bookmark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="북마크 목록 파일로 저장"
-            android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_marginTop="20dp"/>
 
     </LinearLayout>
-
 </LinearLayout>

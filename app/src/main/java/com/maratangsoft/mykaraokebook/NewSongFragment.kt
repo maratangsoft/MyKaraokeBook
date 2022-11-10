@@ -50,13 +50,12 @@ class NewSongFragment : Fragment() {
         }
 
         popup.setOnMenuItemClickListener {
-            var monthBefore = 0
-            when (it.itemId){
-                R.id.this_month -> monthBefore = 0
-                R.id.before_1_month -> monthBefore = -1
-                R.id.before_2_month -> monthBefore = -2
-                R.id.before_3_month -> monthBefore = -3
-                R.id.before_4_month -> monthBefore = -4
+            val monthBefore = when (it.itemId){
+                R.id.this_month -> 0
+                R.id.before_1_month -> -1
+                R.id.before_2_month -> -2
+                R.id.before_3_month -> -3
+                else -> -4
             }
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, monthBefore)

@@ -4,11 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.snackbar.Snackbar
 
 class SQLiteDB(val context:Context) {
     private val db: SQLiteDatabase = context.openOrCreateDatabase("FavoriteDB", Context.MODE_PRIVATE, null)
+
     private val tableName = "favorite"
     private val colId = "id"
     private val colBrand = "brand"
@@ -39,20 +42,21 @@ class SQLiteDB(val context:Context) {
         cv.put(colRelease, release)
 
         db.insert(tableName, null, cv)
+        Toast.makeText(context, "북마크했습니다.", Toast.LENGTH_SHORT).show()
     }
 
     fun deleteDB(no:String){
-        db.delete(tableName, "$colNo=$no AND $colBrand=$brand", null)
+        db.delete(tableName, "$colNo='$no' AND $colBrand='$brand'", null)
+        Toast.makeText(context, "북마크를 취소했습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    fun loadDB(itemList:MutableList<Item>, adapter:RecyclerView.Adapter<ViewHolder>?){
+    fun loadDB(itemList:MutableList<Item>, adapter:RecyclerView.Adapter<ViewHolder>?, sort:String?){
         itemList.clear()
         adapter?.notifyDataSetChanged()
 
-        val cursor = when (brand){
-            BRAND_TJ -> db.rawQuery("SELECT * FROM $tableName WHERE brand=$BRAND_TJ", null)
-            else -> db.rawQuery("SELECT * FROM $tableName WHERE brand=$BRAND_KY", null)
-        }
+        val cursor =    if (sort != null) db.rawQuery("SELECT * FROM $tableName WHERE brand='$brand' ORDER BY $sort", null)
+                        else db.rawQuery("SELECT * FROM $tableName WHERE brand='$brand'", null)
+
         while (cursor.moveToNext()){
             val brand = cursor.getString(1)
             val no = cursor.getString(2)
@@ -67,7 +71,13 @@ class SQLiteDB(val context:Context) {
     }
 
     fun isFavorited(no:String): Boolean{
-        val checkFav = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM $tableName WHERE _no=$no AND brand=$brand", null)
-        return (checkFav != 0L)
+        val checkFav = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM $tableName WHERE _no='$no' AND brand='$brand'", null)
+        return (checkFav > 0L)
+    }
+
+    fun updateMemo(no:String, memo:String){
+        val cv = ContentValues()
+        cv.put("memo", memo)
+        db.update(tableName, cv, "$colNo='$no' AND $colBrand='$brand'", null)
     }
 }
