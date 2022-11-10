@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.map_fragment -> {
                 if (fragments[4] == null){
-                    fragments[4] = MapFragment()
+                    fragments[4] = LocationFragment()
                     transaction.add(R.id.container, fragments[4]!!)
                 }
                 transaction.show(fragments[4]!!)
