@@ -1,8 +1,11 @@
 package com.maratangsoft.mykaraokebook
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.maratangsoft.mykaraokebook.databinding.ActivityMainBinding
 
@@ -15,9 +18,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        requestPermissions()
+
         manager.beginTransaction().add(R.id.container, fragments[0]!!).commit()
         binding.bnv.setOnItemSelectedListener { clickBnv(it) }
     }
+//////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun clickBnv(menuItem: MenuItem): Boolean {
         val transaction = manager.beginTransaction()
@@ -59,5 +65,17 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.commit()
         return true
+    }
+
+    private fun requestPermissions(){
+        //위치정보 퍼미션
+        val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if (it[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
+                Toast.makeText(this@MainActivity, "위치정보 권한 동의", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this@MainActivity, "위치정보를 사용할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        permissionLauncher.launch(permissions)
     }
 }

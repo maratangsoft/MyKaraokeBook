@@ -65,8 +65,8 @@ class FavoriteFragment : Fragment() {
         tvBrand?.text = item.brand
         etMemo?.text = SpannableStringBuilder(item.memo.toString())
         btnSaveMemo?.setOnClickListener {
-            etMemo?.text.let { item.memo = it.toString() }
-            item.memo?.let { db.updateMemo(item.no, it) }
+            item.memo = etMemo?.text.toString()
+            db.updateMemo(item.no, item.memo)
             dialog.dismiss()
         }
         btnDeleteFav?.setOnClickListener {

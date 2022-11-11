@@ -1,7 +1,10 @@
 package com.maratangsoft.mykaraokebook
 
+import android.Manifest
+
 var brand = "tj"
 var rowCount = 50
+val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
 const val BRAND_TJ: String = "tj"
 const val BRAND_KY: String = "kumyoung"

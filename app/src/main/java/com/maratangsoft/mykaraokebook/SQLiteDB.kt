@@ -33,7 +33,7 @@ class SQLiteDB(val context:Context) {
         db.execSQL("CREATE TABLE IF NOT EXISTS $tableName ($columns)")
     }
 
-    fun insertDB(brand:String, no:String, title:String, singer:String, release:String?){
+    fun insertDB(brand:String, no:String, title:String, singer:String, release:String?=null){
         val cv = ContentValues()
         cv.put(colBrand, brand)
         cv.put(colNo, no)
@@ -75,7 +75,7 @@ class SQLiteDB(val context:Context) {
         return (checkFav > 0L)
     }
 
-    fun updateMemo(no:String, memo:String){
+    fun updateMemo(no:String, memo:String?=null){
         val cv = ContentValues()
         cv.put("memo", memo)
         db.update(tableName, cv, "$colNo='$no' AND $colBrand='$brand'", null)
