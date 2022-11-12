@@ -46,13 +46,9 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         loadNaverMap()
     }
 
-//    override fun onHiddenChanged(hidden: Boolean) {
-//        if (hidden) {
-//            naverMap.locationTrackingMode = LocationTrackingMode.None
-//        } else {
-//            naverMap.locationTrackingMode = LocationTrackingMode.Follow
-//        }
-//    }
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (hidden) naverMap.locationTrackingMode = LocationTrackingMode.None
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun loadNaverMap(){
@@ -153,4 +149,4 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 }
             })
     }
-}
+} //TODO 마커 클릭하면 간단한 바텀시트 띄우기, 최대 줌 거리 제한하기

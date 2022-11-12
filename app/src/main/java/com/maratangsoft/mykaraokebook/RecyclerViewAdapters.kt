@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.maratangsoft.mykaraokebook.databinding.ItemFavoriteBinding
 import com.maratangsoft.mykaraokebook.databinding.ItemSearchBinding
-
 class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, var items:MutableList<SongItem>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
     inner class FavoriteViewHolder(val binding:ItemFavoriteBinding) : ViewHolder(binding.root){
         init {
@@ -29,7 +28,7 @@ class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, 
 
     override fun getItemCount() = items.size
 }
-
+//TODO Search, NewSong에서 1페이지 50개 제한 뒀음. 마지막 항목 다다르면 다음 페이지 읽어오게 하기. 데이터는 리스트에 다 받아져 있고 어댑터에 띄우기만 하면 됨
 class SearchAdapter(val context: Context, var items:MutableList<SongItem>) : Adapter<SearchAdapter.SearchViewHolder>() {
 
     val db = SQLiteDB(context)
