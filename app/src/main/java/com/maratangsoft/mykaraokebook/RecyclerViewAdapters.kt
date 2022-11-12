@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.maratangsoft.mykaraokebook.databinding.ItemFavoriteBinding
 import com.maratangsoft.mykaraokebook.databinding.ItemSearchBinding
 
-class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, var items:MutableList<Item>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, var items:MutableList<SongItem>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
     inner class FavoriteViewHolder(val binding:ItemFavoriteBinding) : ViewHolder(binding.root){
         init {
             binding.root.setOnClickListener { hostFragment.clickItem(adapterPosition) }
@@ -30,7 +30,7 @@ class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, 
     override fun getItemCount() = items.size
 }
 
-class SearchAdapter(val context: Context, var items:MutableList<Item>) : Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(val context: Context, var items:MutableList<SongItem>) : Adapter<SearchAdapter.SearchViewHolder>() {
 
     val db = SQLiteDB(context)
 

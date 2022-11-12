@@ -13,7 +13,7 @@ import com.maratangsoft.mykaraokebook.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
-    private var items:MutableList<Item> = mutableListOf()
+    private var items:MutableList<SongItem> = mutableListOf()
     private lateinit var db:SQLiteDB
     private var sort = SORT_TITLE
 

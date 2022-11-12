@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.google.android.material.snackbar.Snackbar
 
 class SQLiteDB(val context:Context) {
     private val db: SQLiteDatabase = context.openOrCreateDatabase("FavoriteDB", Context.MODE_PRIVATE, null)
@@ -50,7 +49,7 @@ class SQLiteDB(val context:Context) {
         Toast.makeText(context, "북마크를 취소했습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    fun loadDB(itemList:MutableList<Item>, adapter:RecyclerView.Adapter<ViewHolder>?, sort:String?){
+    fun loadDB(itemList:MutableList<SongItem>, adapter:RecyclerView.Adapter<ViewHolder>?, sort:String?){
         itemList.clear()
         adapter?.notifyDataSetChanged()
 
@@ -64,7 +63,7 @@ class SQLiteDB(val context:Context) {
             val singer = cursor.getString(4)
             val release:String? = cursor.getString(5)
             val memo:String? = cursor.getString(6)
-            itemList.add(Item(brand, no, title, singer, release, memo))
+            itemList.add(SongItem(brand, no, title, singer, release, memo))
         }
         cursor.close()
         adapter?.notifyDataSetChanged()

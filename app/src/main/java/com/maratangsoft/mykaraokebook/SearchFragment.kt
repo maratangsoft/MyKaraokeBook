@@ -18,8 +18,8 @@ import kotlin.math.min
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
-    private var items:MutableList<Item> = mutableListOf()
-    private lateinit var result: MutableList<Item>
+    private var items:MutableList<SongItem> = mutableListOf()
+    private lateinit var result: MutableList<SongItem>
     private var query = QUERY_TITLE
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -72,10 +72,10 @@ class SearchFragment : Fragment() {
         binding.recycler.adapter?.notifyDataSetChanged()
 
         val word = binding.et.text.toString().trim()
-        RetrofitHelper.getInstance().create(RetrofitService::class.java)
-            .loadSearchData(query, word, brand).enqueue(object: Callback<MutableList<Item>>{
+        RetrofitHelper.getInstance("https://api.manana.kr/").create(RetrofitService::class.java)
+            .loadSearchData(query, word, brand).enqueue(object: Callback<MutableList<SongItem>>{
 
-                override fun onResponse(call: Call<MutableList<Item>>, response: Response<MutableList<Item>>) {
+                override fun onResponse(call: Call<MutableList<SongItem>>, response: Response<MutableList<SongItem>>) {
                     if (response.body().isNullOrEmpty()) {
                         Toast.makeText(requireActivity(), "검색 결과가 없습니다!", Toast.LENGTH_SHORT).show()
                     } else {
@@ -87,7 +87,7 @@ class SearchFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<MutableList<Item>>, t: Throwable) {
+                override fun onFailure(call: Call<MutableList<SongItem>>, t: Throwable) {
                     AlertDialog.Builder(requireActivity()).setMessage(t.message).show()
                 }
             })

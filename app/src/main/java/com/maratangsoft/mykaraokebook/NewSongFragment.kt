@@ -18,8 +18,8 @@ import kotlin.math.min
 
 class NewSongFragment : Fragment() {
     private lateinit var binding: FragmentNewSongBinding
-    private var items: MutableList<Item> = mutableListOf()
-    private lateinit var result: MutableList<Item>
+    private var items: MutableList<SongItem> = mutableListOf()
+    private lateinit var result: MutableList<SongItem>
     private var targetMonth = SimpleDateFormat("yyyyMM").format(Date())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -71,10 +71,10 @@ class NewSongFragment : Fragment() {
         items.clear()
         binding.recycler.adapter?.notifyDataSetChanged()
 
-        RetrofitHelper.getInstance().create(RetrofitService::class.java)
-        .loadNewSongData(targetMonth, brand).enqueue(object : Callback<MutableList<Item>> {
+        RetrofitHelper.getInstance("https://api.manana.kr/").create(RetrofitService::class.java)
+        .loadNewSongData(targetMonth, brand).enqueue(object : Callback<MutableList<SongItem>> {
 
-                override fun onResponse(call: Call<MutableList<Item>>, response: Response<MutableList<Item>>) {
+                override fun onResponse(call: Call<MutableList<SongItem>>, response: Response<MutableList<SongItem>>) {
                     response.body()?.let { result = it }
                     for (i in 0 until min(rowCount, result.size)) {
                         items.add(result[i])
@@ -82,7 +82,7 @@ class NewSongFragment : Fragment() {
                     binding.recycler.adapter?.notifyDataSetChanged()
                 }
 
-                override fun onFailure(call: Call<MutableList<Item>>, t: Throwable) {
+                override fun onFailure(call: Call<MutableList<SongItem>>, t: Throwable) {
                     AlertDialog.Builder(requireActivity()).setMessage(t.message).show()
                 }
 
