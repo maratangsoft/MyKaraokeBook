@@ -1,34 +1,23 @@
 package com.maratangsoft.mykaraokebook
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.*
 import com.maratangsoft.mykaraokebook.databinding.FragmentLocationBinding
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.LocationSource
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 
-class LocationFragment : Fragment() {
+class LocationFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentLocationBinding
-
-    val providerClient by lazy { LocationServices.getFusedLocationProviderClient(requireActivity()) }
-    val locationRequest = LocationRequest.Builder(
-        Priority.PRIORITY_HIGH_ACCURACY, 5000
-    ).build()
-    lateinit var locationCallback: LocationCallback
-
-    lateinit var naverMap: NaverMap
+    private lateinit var naverMap: NaverMap
     lateinit var locationSource: FusedLocationSource
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,16 +28,17 @@ class LocationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
-        locationSource = FusedLocationSource(requireActivity(), LOCATION_PER)
-        getLocation()
+        locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION_CODE)
+
         loadNaverMap()
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        when (hidden){
-            true -> providerClient.removeLocationUpdates(locationCallback)
-            false -> getLocation()
+        if (hidden){
+            naverMap.locationTrackingMode = LocationTrackingMode.None
+        }else{
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,23 +49,37 @@ class LocationFragment : Fragment() {
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.frag_map, it).commit()
             }
-        map.getMapAsync {
-            this.naverMap = it
-        }
+        map.getMapAsync(this)
     }
 
-    fun getLocation(){
-        //FusedLocationProvider로 좌표 받기
-        locationCallback = object: LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                val location = locationResult.lastLocation
-                Log.d("TAG", location.toString())
+    override fun onMapReady(p0: NaverMap) {
+        //퍼미션 체크 TODO: Fragment에서 Deprecated된 방법. 맵을 액티비티로 옮기는 게 좋을듯
+        if(requireActivity().checkSelfPermission(permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            requestPermissions(permissions, LOCATION_PERMISSION_CODE)
+        }
+        this.naverMap = p0
+        naverMap.locationSource = locationSource
+
+        naverMap.addOnLocationChangeListener {
+            Log.d("aaa", "lat = ${it.latitude}, lng = ${it.longitude}")
+        }
+
+        val uiSettings = naverMap.uiSettings
+        uiSettings.isLocationButtonEnabled = true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+            Log.d("aaa_LocationFrag", locationSource.isActivated.toString())
+            if (locationSource.isActivated) {
+                naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            }else{
+                naverMap.locationTrackingMode = LocationTrackingMode.None
             }
+            return
         }
-        if (ActivityCompat.checkSelfPermission(requireActivity(), permissions[0]) == PackageManager.PERMISSION_GRANTED) {
-            providerClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
-        }
-
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
