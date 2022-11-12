@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="곡 제목"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="태진"
+        android:textColor="@color/gray"
+        android:layout_alignBottom="@+id/tv_title"
+        android:layout_toEndOf="@id/tv_title"
+        android:layout_marginStart="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="메모를 적어 주세요."
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:gravity="top"
+        android:padding="6dp"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_search_tool"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_save_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메모 저장"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_delete_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="북마크 취소"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

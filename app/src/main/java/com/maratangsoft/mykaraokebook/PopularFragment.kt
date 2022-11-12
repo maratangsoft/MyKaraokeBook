@@ -15,7 +15,7 @@ import kotlin.concurrent.thread
 
 class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
-    private var items: MutableList<Item> = mutableListOf()
+    private var items: MutableList<SongItem> = mutableListOf()
     private var strType = "1"
     private var gb = "1"
 
@@ -83,7 +83,7 @@ class PopularFragment : Fragment() {
                     val no:String = tds[1].text()
                     val title:String = tds[2].text()
                     val singer:String = tds[3].text()
-                    items.add(Item(brand, no, title, singer, null, null))
+                    items.add(SongItem(brand, no, title, singer, null, null))
                 }
                 requireActivity().runOnUiThread{
                     binding.recycler.adapter?.notifyDataSetChanged()
@@ -112,7 +112,7 @@ class PopularFragment : Fragment() {
                     val no:String = lis[1].text()
                     val title:String = lis.select("li[class=popular_chart_tit clear] span")[0].text()
                     val singer:String = lis[3].text()
-                    items.add(Item(brand, no, title, singer, null, null))
+                    items.add(SongItem(brand, no, title, singer, null, null))
                 }
 
                 requireActivity().runOnUiThread{

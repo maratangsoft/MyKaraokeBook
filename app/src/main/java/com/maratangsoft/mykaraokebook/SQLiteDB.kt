@@ -4,11 +4,13 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class SQLiteDB(val context:Context) {
     private val db: SQLiteDatabase = context.openOrCreateDatabase("FavoriteDB", Context.MODE_PRIVATE, null)
+
     private val tableName = "favorite"
     private val colId = "id"
     private val colBrand = "brand"
@@ -30,7 +32,7 @@ class SQLiteDB(val context:Context) {
         db.execSQL("CREATE TABLE IF NOT EXISTS $tableName ($columns)")
     }
 
-    fun insertDB(brand:String, no:String, title:String, singer:String, release:String?){
+    fun insertDB(brand:String, no:String, title:String, singer:String, release:String?=null){
         val cv = ContentValues()
         cv.put(colBrand, brand)
         cv.put(colNo, no)
@@ -39,20 +41,21 @@ class SQLiteDB(val context:Context) {
         cv.put(colRelease, release)
 
         db.insert(tableName, null, cv)
+        Toast.makeText(context, "북마크했습니다.", Toast.LENGTH_SHORT).show()
     }
 
     fun deleteDB(no:String){
-        db.delete(tableName, "$colNo=$no AND $colBrand=$brand", null)
+        db.delete(tableName, "$colNo='$no' AND $colBrand='$brand'", null)
+        Toast.makeText(context, "북마크를 취소했습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    fun loadDB(itemList:MutableList<Item>, adapter:RecyclerView.Adapter<ViewHolder>?){
+    fun loadDB(itemList:MutableList<SongItem>, adapter:RecyclerView.Adapter<ViewHolder>?, sort:String?){
         itemList.clear()
         adapter?.notifyDataSetChanged()
 
-        val cursor = when (brand){
-            BRAND_TJ -> db.rawQuery("SELECT * FROM $tableName WHERE brand=$BRAND_TJ", null)
-            else -> db.rawQuery("SELECT * FROM $tableName WHERE brand=$BRAND_KY", null)
-        }
+        val cursor =    if (sort != null) db.rawQuery("SELECT * FROM $tableName WHERE brand='$brand' ORDER BY $sort", null)
+                        else db.rawQuery("SELECT * FROM $tableName WHERE brand='$brand'", null)
+
         while (cursor.moveToNext()){
             val brand = cursor.getString(1)
             val no = cursor.getString(2)
@@ -60,14 +63,20 @@ class SQLiteDB(val context:Context) {
             val singer = cursor.getString(4)
             val release:String? = cursor.getString(5)
             val memo:String? = cursor.getString(6)
-            itemList.add(Item(brand, no, title, singer, release, memo))
+            itemList.add(SongItem(brand, no, title, singer, release, memo))
         }
         cursor.close()
         adapter?.notifyDataSetChanged()
     }
 
     fun isFavorited(no:String): Boolean{
-        val checkFav = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM $tableName WHERE _no=$no AND brand=$brand", null)
-        return (checkFav != 0L)
+        val checkFav = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM $tableName WHERE _no='$no' AND brand='$brand'", null)
+        return (checkFav > 0L)
+    }
+
+    fun updateMemo(no:String, memo:String?=null){
+        val cv = ContentValues()
+        cv.put("memo", memo)
+        db.update(tableName, cv, "$colNo='$no' AND $colBrand='$brand'", null)
     }
 }

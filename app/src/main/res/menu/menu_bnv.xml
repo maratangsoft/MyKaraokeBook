@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/favorite_fragment"
+    <item android:id="@+id/bnv_favorite"
         android:title="@string/bnv_favorite"
         android:icon="@drawable/bnv_favorite"/>
-    <item android:id="@+id/search_fragment"
+
+    <item android:id="@+id/bnv_search"
         android:title="@string/bnv_search"
         android:icon="@drawable/bnv_search"/>
-    <item android:id="@+id/new_song_fragment"
+
+    <item android:id="@+id/bnv_newSong"
         android:title="@string/bnv_new_song"
         android:icon="@drawable/bnv_new_song"/>
-    <item android:id="@+id/popular_fragment"
+
+    <item android:id="@+id/bnv_popular"
         android:title="@string/bnv_popular"
         android:icon="@drawable/bnv_popular"/>
-    <item android:id="@+id/map_fragment"
+
+    <item android:id="@+id/bnv_location"
         android:title="@string/bnv_map"
         android:icon="@drawable/bnv_map"/>
 

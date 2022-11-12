@@ -2,18 +2,15 @@ package com.maratangsoft.mykaraokebook
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.maratangsoft.mykaraokebook.databinding.ItemFavoriteBinding
 import com.maratangsoft.mykaraokebook.databinding.ItemSearchBinding
-
-class FavoriteAdapter(val context: Context, var items:MutableList<Item>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, var items:MutableList<SongItem>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
     inner class FavoriteViewHolder(val binding:ItemFavoriteBinding) : ViewHolder(binding.root){
         init {
-            binding.root.setOnClickListener { clickItem(it) }
+            binding.root.setOnClickListener { hostFragment.clickItem(adapterPosition) }
         }
     }
 
@@ -30,16 +27,15 @@ class FavoriteAdapter(val context: Context, var items:MutableList<Item>) : Adapt
     }
 
     override fun getItemCount() = items.size
-
-    fun clickItem(view:View){
-
-    }
 }
+//TODO Search, NewSong에서 1페이지 50개 제한 뒀음. 마지막 항목 다다르면 다음 페이지 읽어오게 하기. 데이터는 리스트에 다 받아져 있고 어댑터에 띄우기만 하면 됨
+class SearchAdapter(val context: Context, var items:MutableList<SongItem>) : Adapter<SearchAdapter.SearchViewHolder>() {
 
-class SearchAdapter(val context: Context, var items:MutableList<Item>) : Adapter<SearchAdapter.SearchViewHolder>() {
+    val db = SQLiteDB(context)
+
     inner class SearchViewHolder(val binding:ItemSearchBinding) : ViewHolder(binding.root){
         init {
-            binding.btnFavorite.setOnClickListener { clickItem(it) }
+            binding.root.setOnClickListener { clickItem(binding, adapterPosition) }
         }
     }
 
@@ -52,12 +48,23 @@ class SearchAdapter(val context: Context, var items:MutableList<Item>) : Adapter
         holder.binding.tvNo.text = items[position].no
         holder.binding.tvTitle.text = items[position].title
         holder.binding.tvSinger.text = items[position].singer
+        if (db.isFavorited(items[position].no)) holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
+        else holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
     }
 
     override fun getItemCount() = items.size
 
-    fun clickItem(view:View){
+    fun clickItem(binding:ItemSearchBinding, position:Int){
+        val item = items[position]
 
+        //DB에서 중복검사해서 없으면 삽입, 있으면 삭제
+        if (!db.isFavorited(item.no)){
+            db.insertDB(item.brand, item.no, item.title, item.singer, item.release)
+            binding.btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
+        }else{
+            db.deleteDB(item.no)
+            binding.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
+        }
     }
 }
 

@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
-        android:layout_marginTop="7dp">
-        <ImageView
+        android:layout_marginTop="8dp">
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_sort"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/icons8_sort_amount_up_reversed_48"/>
-        <ImageView
+            android:src="@drawable/icons8_sort_amount_up_reversed_48"
+            app:tint="@color/ic_color"/>
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
