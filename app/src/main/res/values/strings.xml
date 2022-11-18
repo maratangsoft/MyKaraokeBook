@@ -6,5 +6,14 @@
     <string name="bnv_popular">인기곡</string>
     <string name="bnv_map">근처노래방</string>
     <string name="activity_setting">설정</string>
+
+    <string name="tj">태진</string>
+    <string name="kumyoung">금영</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="delete">북마크 삭제</string>
+
     <string name="map_not_permitted">위치정보 권한을 허용해 주세요.</string>
+
+
 </resources>

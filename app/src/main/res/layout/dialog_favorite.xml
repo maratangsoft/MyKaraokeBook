@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:padding="10dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"
@@ -10,13 +9,14 @@
         android:layout_height="wrap_content"
         android:text="곡 제목"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_margin="12dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="태진"
+        android:text="@string/tj"
         android:textColor="@color/gray"
         android:layout_alignBottom="@+id/tv_title"
         android:layout_toEndOf="@id/tv_title"
@@ -32,24 +32,35 @@
         android:gravity="top"
         android:padding="6dp"
         android:layout_below="@id/tv_title"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_search_tool"/>
+        android:background="@drawable/bg_search_tool"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="4dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_save_memo"
+        android:id="@+id/btn_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메모 저장"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
+        android:text="@string/confirm"
+        android:padding="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/et_memo"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:padding="12dp"
+        android:layout_toStartOf="@id/btn_confirm"
+        android:layout_below="@id/et_memo"
+        android:layout_marginEnd="10dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btn_delete_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="북마크 취소"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"/>
+        android:text="@string/delete"
+        android:padding="12dp"
+        android:layout_below="@id/et_memo"/>
 
 </RelativeLayout>

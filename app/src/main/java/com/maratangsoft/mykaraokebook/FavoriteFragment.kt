@@ -2,7 +2,6 @@ package com.maratangsoft.mykaraokebook
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.view.*
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
@@ -58,12 +57,12 @@ class FavoriteFragment : Fragment() {
         val tvTitle = dialog.findViewById<AppCompatTextView>(R.id.tv_title)
         val tvBrand = dialog.findViewById<AppCompatTextView>(R.id.tv_brand)
         val etMemo = dialog.findViewById<AppCompatEditText>(R.id.et_memo)
-        val btnSaveMemo = dialog.findViewById<AppCompatTextView>(R.id.btn_save_memo)
+        val btnSaveMemo = dialog.findViewById<AppCompatTextView>(R.id.btn_confirm)
         val btnDeleteFav = dialog.findViewById<AppCompatTextView>(R.id.btn_delete_fav)
 
         tvTitle?.text = item.title
-        tvBrand?.text = item.brand
-        etMemo?.text = SpannableStringBuilder(item.memo.toString())
+        tvBrand?.text = if (item.brand == "tj") getText(R.string.tj) else getText(R.string.kumyoung)
+        etMemo?.setText(item.memo)
         btnSaveMemo?.setOnClickListener {
             item.memo = etMemo?.text.toString()
             db.updateMemo(item.no, item.memo)
