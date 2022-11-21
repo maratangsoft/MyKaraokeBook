@@ -13,7 +13,10 @@
     <string name="cancel">취소</string>
     <string name="delete">북마크 삭제</string>
 
+<!--Map Fragment-->
     <string name="map_not_permitted">위치정보 권한을 허용해 주세요.</string>
 
+<!--setting Activity-->
+    <string name="msg_clearDB">정말로 북마크를 초기화하시겠습니까? 초기화하면 앱이 재시작됩니다.</string>
 
 </resources>

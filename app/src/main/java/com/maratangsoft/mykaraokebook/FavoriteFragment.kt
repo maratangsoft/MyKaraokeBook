@@ -58,6 +58,7 @@ class FavoriteFragment : Fragment() {
         val tvBrand = dialog.findViewById<AppCompatTextView>(R.id.tv_brand)
         val etMemo = dialog.findViewById<AppCompatEditText>(R.id.et_memo)
         val btnSaveMemo = dialog.findViewById<AppCompatTextView>(R.id.btn_confirm)
+        val btnCancel = dialog.findViewById<AppCompatTextView>(R.id.btn_cancel)
         val btnDeleteFav = dialog.findViewById<AppCompatTextView>(R.id.btn_delete_fav)
 
         tvTitle?.text = item.title
@@ -67,10 +68,15 @@ class FavoriteFragment : Fragment() {
             item.memo = etMemo?.text.toString()
             db.updateMemo(item.no, item.memo)
             dialog.dismiss()
+            db.loadDB(items, binding.recycler.adapter, sort)
+        }
+        btnCancel?.setOnClickListener {
+            dialog.dismiss()
         }
         btnDeleteFav?.setOnClickListener {
             db.deleteDB(item.no)
             dialog.dismiss()
+            db.loadDB(items, binding.recycler.adapter, sort)
         }
     }
 }
