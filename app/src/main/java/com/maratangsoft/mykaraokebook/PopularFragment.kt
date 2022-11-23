@@ -26,7 +26,7 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnNation.setOnClickListener { openPopup() }
+        binding.spinLanguage.setOnClickListener { openPopup() }
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
 
@@ -39,7 +39,7 @@ class PopularFragment : Fragment() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun openPopup(){
-        val popup = PopupMenu(requireActivity(), binding.btnNation)
+        val popup = PopupMenu(requireActivity(), binding.spinLanguage)
         popup.menuInflater.inflate(R.menu.popup_popular, popup.menu)
         popup.setOnMenuItemClickListener {
             when (it.itemId){
@@ -56,7 +56,7 @@ class PopularFragment : Fragment() {
                     gb = "6"
                 }
             }
-            binding.btnNation.text = it.title
+            binding.spinLanguage.text = it.title
             when (brand){
                 BRAND_TJ -> loadTJData()
                 BRAND_KY -> loadKumyoungData()

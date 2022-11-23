@@ -29,8 +29,8 @@ class NewSongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnMonth.setOnClickListener { openPopup() }
-        binding.btnMonth.text = SimpleDateFormat("yyyy년 MM월").format(Date())
+        binding.spinMonth.setOnClickListener { openPopup() }
+        binding.spinMonth.text = SimpleDateFormat("yyyy년 MM월").format(Date())
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
 
@@ -40,7 +40,7 @@ class NewSongFragment : Fragment() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun openPopup(){
-        val popup = PopupMenu(requireActivity(), binding.btnMonth)
+        val popup = PopupMenu(requireActivity(), binding.spinMonth)
         popup.menuInflater.inflate(R.menu.popup_new_song, popup.menu)
 
         for (i in 0..4){
@@ -59,7 +59,7 @@ class NewSongFragment : Fragment() {
             }
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, monthBefore)
-            binding.btnMonth.text = it.title
+            binding.spinMonth.text = it.title
             targetMonth = SimpleDateFormat("yyyyMM").format(calendar.time)
             initData()
             true

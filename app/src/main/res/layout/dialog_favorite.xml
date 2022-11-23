@@ -7,7 +7,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="곡 제목"
+        android:text="@string/dialog_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_margin="12dp"/>
@@ -26,7 +26,7 @@
         android:id="@+id/et_memo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="메모를 적어 주세요."
+        android:hint="@string/dialog_memo"
         android:inputType="textMultiLine"
         android:lines="3"
         android:gravity="top"

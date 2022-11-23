@@ -29,6 +29,7 @@ class FavoriteFragment : Fragment() {
 
         db = SQLiteDB(requireActivity())
         db.loadDB(items, binding.recycler.adapter, sort)
+        if (items.isEmpty()) binding.noData.visibility = View.VISIBLE
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

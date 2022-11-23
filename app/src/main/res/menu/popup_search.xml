@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/title"
-        android:title="제목"/>
+        android:title="@string/sch_popup_title"/>
     <item
         android:id="@+id/singer"
-        android:title="가수"/>
+        android:title="@string/sch_popup_singer"/>
     <item
         android:id="@+id/no"
-        android:title="번호"/>
+        android:title="@string/sch_popup_no"/>
 </menu>

@@ -73,6 +73,6 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun exportFavorite(){
-        Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
+        //TODO: 북마크 파일로 저장
     }
 }

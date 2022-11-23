@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
         items.clear()
         binding.recycler.adapter?.notifyDataSetChanged()
 
-        val word = binding.et.text.toString().trim()
+        val word = binding.et.text.toString().replace(" ", "")
         RetrofitHelper.getInstance("https://api.manana.kr/").create(RetrofitService::class.java)
             .loadSearchData(query, word, brand).enqueue(object: Callback<MutableList<SongItem>>{
 
