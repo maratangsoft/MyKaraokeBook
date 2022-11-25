@@ -2,7 +2,6 @@ package com.maratangsoft.mykaraokebook
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
@@ -14,7 +13,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.maratangsoft.mykaraokebook.databinding.FragmentLocationBinding
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
@@ -73,9 +71,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         uiSettings.isLocationButtonEnabled = true
 
         naverMap.addOnLocationChangeListener {
-            val query = makeQuery()
-            Log.d("CustomTag-query", query)
-            if (query != "") searchKaraoke(query)
+            makeQuery()
         }
     }
 
@@ -88,12 +84,12 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun makeQuery(): String {
+    private fun makeQuery() {
         locationSource.lastLocation?.let {
             val presentPosition = it
             //현재 좌표가 lastPosition과 50미터 이상 차이가 나지 않으면 작업 수행 안함
             if (lastPosition != null && presentPosition.distanceTo(lastPosition!!) <= 50) {
-                return ""
+                return
             }
             lastPosition = presentPosition
             Log.d("CustomTag-address", presentPosition.toString())
@@ -102,23 +98,22 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             val lat = presentPosition.latitude
             val lng = presentPosition.longitude
             val geocoder = Geocoder(requireActivity(), Locale.KOREAN)
+            var query = ""
 
-            var addresses: List<Address> = listOf()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                geocoder.getFromLocation(lat, lng, 5) {
-                    addresses = it
+            if (Build.VERSION.SDK_INT >= 33) {
+                geocoder.getFromLocation(lat, lng, 5) { addressList ->
+                    val region = addressList[2].getAddressLine(0).replace("대한민국 ", "")
+                    query = "$region 노래방"
+                    searchKaraoke(query)
                 }
             } else {
-                geocoder.getFromLocation(lat, lng, 5)?.let { addresses = it }
+                geocoder.getFromLocation(lat, lng, 5)?.let { addressList ->
+                    val region = addressList[2].getAddressLine(0).replace("대한민국 ", "")
+                    query = "$region 노래방"
+                    searchKaraoke(query)
+                }
             }
-
-            Log.d("CustomTag-address", addresses.toString())
-
-            //주소 가공해서 검색어 만들기
-            val region = addresses[2].getAddressLine(0).replace("대한민국 ", "")
-            return "$region 노래방"
         }
-        return ""
     }
 
     private fun searchKaraoke(query:String){
