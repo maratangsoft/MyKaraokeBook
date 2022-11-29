@@ -29,9 +29,8 @@ class IntroActivity : AppCompatActivity() {
 
     private fun goToMain(){
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, 2000)
+        }, 1500)
     }
 }
