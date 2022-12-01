@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.maratangsoft.mykaraokebook.databinding.FragmentNewSongBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,18 +31,34 @@ class NewSongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnMonth.setOnClickListener { openPopup() }
-        binding.btnMonth.text = SimpleDateFormat("yyyy년 MM월").format(Date())
+        binding.spinMonth.setOnClickListener { openPopup() }
+        binding.spinMonth.text = SimpleDateFormat("yyyy년 MM월").format(Date())
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
 
         initData()
+
+        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                if (!binding.recycler.canScrollVertically(1) && lastVisibleItemPosition == items.lastIndex){
+                    items.removeAt(items.lastIndex)
+                    binding.recycler.adapter?.notifyItemRemoved(items.lastIndex + 1)
+                    for (i in items.size until min(items.size+rowCount, result.size)){
+                        items.add(result[i])
+                        binding.recycler.adapter?.notifyItemInserted(i)
+                    }
+                }
+            }
+        })
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun openPopup(){
-        val popup = PopupMenu(requireActivity(), binding.btnMonth)
+        val popup = PopupMenu(requireActivity(), binding.spinMonth)
         popup.menuInflater.inflate(R.menu.popup_new_song, popup.menu)
 
         for (i in 0..4){
@@ -59,7 +77,7 @@ class NewSongFragment : Fragment() {
             }
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, monthBefore)
-            binding.btnMonth.text = it.title
+            binding.spinMonth.text = it.title
             targetMonth = SimpleDateFormat("yyyyMM").format(calendar.time)
             initData()
             true
@@ -78,14 +96,14 @@ class NewSongFragment : Fragment() {
                     response.body()?.let { result = it }
                     for (i in 0 until min(rowCount, result.size)) {
                         items.add(result[i])
+                        binding.recycler.adapter?.notifyItemInserted(i)
                     }
-                    binding.recycler.adapter?.notifyDataSetChanged()
+                    items.add(SongItem("","","","",null,null))
+                    binding.recycler.adapter?.notifyItemInserted(items.lastIndex)
                 }
-
                 override fun onFailure(call: Call<MutableList<SongItem>>, t: Throwable) {
                     AlertDialog.Builder(requireActivity()).setMessage(t.message).show()
                 }
-
             })
     }
 }

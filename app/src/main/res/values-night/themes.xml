@@ -3,7 +3,7 @@
     <style name="Theme.MyKaraokeBook" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">#5ACFDA</item>
+        <item name="colorPrimaryVariant">@color/brand_color</item>
         <item name="colorOnPrimary">#FF121212</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#FF121212</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.SplashActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor" >@color/brand_color</item>
+        <item name="android:background">@drawable/bg_splash</item>
     </style>
 </resources>

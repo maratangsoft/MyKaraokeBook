@@ -1,10 +1,47 @@
 <resources>
-    <string name="app_name">내노래방책</string>
-    <string name="bnv_favorite">북마크</string>
-    <string name="bnv_search">곡검색</string>
-    <string name="bnv_new_song">신곡</string>
-    <string name="bnv_popular">인기곡</string>
-    <string name="bnv_map">근처노래방</string>
-    <string name="activity_setting">설정</string>
-    <string name="map_not_permitted">위치정보 권한을 허용해 주세요.</string>
+    <string name="app_name">My Karaoke Book</string>
+    <string name="bnv_favorite">Bookmark</string>
+    <string name="bnv_search">Search</string>
+    <string name="bnv_new_song">New</string>
+    <string name="bnv_popular">Popular</string>
+    <string name="bnv_map">Location</string>
+    <string name="activity_setting">Setting</string>
+
+    <string name="tj">TJ</string>
+    <string name="kumyoung">KY</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete this Bookmark</string>
+
+    <!--Favorite Fragment-->
+    <string name="fav_popup_title">by title</string>
+    <string name="fav_popup_singer">by singer</string>
+    <string name="fav_popup_no">by number</string>
+    <string name="dialog_title">Title</string>
+    <string name="dialog_memo">You can write a memo about this song.</string>
+    <string name="no_data">There is no bookmark yet.</string>
+
+    <!--Search Fragment-->
+    <string name="sch_popup_title">title</string>
+    <string name="sch_popup_singer">singer</string>
+    <string name="sch_popup_no">number</string>
+    <string name="query_hint">Input words to search</string>
+
+    <!--New Song Fragment-->
+    <string name="spin_month">Dec. 9999</string>
+
+    <!--Popular Fragment-->
+    <string name="ppl_popup_kor">Korean</string>
+    <string name="ppl_popup_eng">English</string>
+    <string name="ppl_popup_jpn">Japanese</string>
+
+    <!--Map Fragment-->
+    <string name="map_not_permitted">You should permit the Location Permission.</string>
+
+    <!--setting Activity-->
+    <string name="setting_brand">Karaoke Brand</string>
+    <string name="setting_reset">Reset Bookmark List</string>
+    <string name="setting_export">Export Bookmark List to .txt</string>
+    <string name="msg_clearDB">Do you really want to clear the bookmark list? If you do that, the app will be restarted.</string>
+
 </resources>

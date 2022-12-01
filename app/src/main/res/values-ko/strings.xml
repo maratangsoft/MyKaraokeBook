@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">내노래방책</string>
+    <string name="bnv_favorite">북마크</string>
+    <string name="bnv_search">곡검색</string>
+    <string name="bnv_new_song">신곡</string>
+    <string name="bnv_popular">인기곡</string>
+    <string name="bnv_map">근처노래방</string>
+    <string name="activity_setting">설정</string>
+
+    <string name="tj">태진</string>
+    <string name="kumyoung">금영</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="delete">북마크 삭제</string>
+
+    <!--Favorite Fragment-->
+    <string name="fav_popup_title">제목순</string>
+    <string name="fav_popup_singer">가수순</string>
+    <string name="fav_popup_no">번호순</string>
+    <string name="dialog_title">곡 제목</string>
+    <string name="dialog_memo">메모를 남길 수 있습니다.</string>
+    <string name="no_data">아직 북마크된 곡이 없습니다.</string>
+
+    <!--Search Fragment-->
+    <string name="sch_popup_title">제목으로</string>
+    <string name="sch_popup_singer">가수로</string>
+    <string name="sch_popup_no">번호로</string>
+    <string name="query_hint">검색어를 입력해 주세요.</string>
+
+    <!--New Song Fragment-->
+    <string name="spin_month">9999년 99월</string>
+
+    <!--Popular Fragment-->
+    <string name="ppl_popup_kor">한국어곡</string>
+    <string name="ppl_popup_eng">영어곡</string>
+    <string name="ppl_popup_jpn">일본어곡</string>
+
+    <!--Map Fragment-->
+    <string name="map_not_permitted">위치정보 권한을 허용해 주세요.</string>
+
+    <!--setting Activity-->
+    <string name="setting_brand">반주기 설정</string>
+    <string name="setting_reset">북마크 초기화</string>
+    <string name="setting_export">북마크 txt파일로 내보내기</string>
+    <string name="msg_clearDB">정말로 북마크를 초기화하시겠습니까? 초기화하면 앱이 재시작됩니다.</string>
+</resources>

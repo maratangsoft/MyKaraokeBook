@@ -21,7 +21,11 @@ class SQLiteDB(val context:Context) {
     private val colMemo = "memo"
 
     init {
-        val columns = StringBuilder()
+        createTable()
+    }
+
+    private fun createTable(){
+        val schema = StringBuilder()
             .append("$colId        INTEGER         NOT NULL PRIMARY KEY AUTOINCREMENT,")
             .append("$colBrand     VARCHAR(10)     NOT NULL,")
             .append("$colNo        VARCHAR(6)      NOT NULL,")
@@ -29,7 +33,7 @@ class SQLiteDB(val context:Context) {
             .append("$colSinger    TEXT            NOT NULL,")
             .append("$colRelease   VARCHAR(10),")
             .append("$colMemo      TEXT").toString()
-        db.execSQL("CREATE TABLE IF NOT EXISTS $tableName ($columns)")
+        db.execSQL("CREATE TABLE IF NOT EXISTS $tableName ($schema)")
     }
 
     fun insertDB(brand:String, no:String, title:String, singer:String, release:String?=null){
@@ -78,5 +82,10 @@ class SQLiteDB(val context:Context) {
         val cv = ContentValues()
         cv.put("memo", memo)
         db.update(tableName, cv, "$colNo='$no' AND $colBrand='$brand'", null)
+    }
+
+    fun clearDB(){
+        db.execSQL("DROP TABLE $tableName")
+        createTable()
     }
 }

@@ -3,9 +3,11 @@ package com.maratangsoft.mykaraokebook
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.maratangsoft.mykaraokebook.databinding.ItemFavoriteBinding
+import com.maratangsoft.mykaraokebook.databinding.ItemLoadingBinding
 import com.maratangsoft.mykaraokebook.databinding.ItemSearchBinding
 class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, var items:MutableList<SongItem>) : Adapter<FavoriteAdapter.FavoriteViewHolder>() {
     inner class FavoriteViewHolder(val binding:ItemFavoriteBinding) : ViewHolder(binding.root){
@@ -28,28 +30,42 @@ class FavoriteAdapter(val context: Context, val hostFragment: FavoriteFragment, 
 
     override fun getItemCount() = items.size
 }
-//TODO Search, NewSong에서 1페이지 50개 제한 뒀음. 마지막 항목 다다르면 다음 페이지 읽어오게 하기. 데이터는 리스트에 다 받아져 있고 어댑터에 띄우기만 하면 됨
-class SearchAdapter(val context: Context, var items:MutableList<SongItem>) : Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(val context: Context, var items:MutableList<SongItem>) : Adapter<ViewHolder>() {
 
-    val db = SQLiteDB(context)
+    private val db = SQLiteDB(context)
+    private val ITEM = 1
+    private val LOADING = 0
 
     inner class SearchViewHolder(val binding:ItemSearchBinding) : ViewHolder(binding.root){
         init {
             binding.root.setOnClickListener { clickItem(binding, adapterPosition) }
         }
     }
+    inner class LoadingViewHolder(private val binding:ItemLoadingBinding) : ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false)
-        return SearchViewHolder(ItemSearchBinding.bind(itemView))
+    override fun getItemViewType(position: Int): Int {
+        return if (items[position].no != "") ITEM else LOADING
     }
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.binding.tvNo.text = items[position].no
-        holder.binding.tvTitle.text = items[position].title
-        holder.binding.tvSinger.text = items[position].singer
-        if (db.isFavorited(items[position].no)) holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
-        else holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewHolder:ViewHolder = if (viewType == ITEM){
+            val itemView = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false)
+            SearchViewHolder(ItemSearchBinding.bind(itemView))
+        }else{
+            val itemView = LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false)
+            LoadingViewHolder(ItemLoadingBinding.bind(itemView))
+        }
+        return viewHolder
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (holder is SearchViewHolder){
+            holder.binding.tvNo.text = items[position].no
+            holder.binding.tvTitle.text = items[position].title
+            holder.binding.tvSinger.text = items[position].singer
+            if (db.isFavorited(items[position].no)) holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
+            else holder.binding.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
+        }
     }
 
     override fun getItemCount() = items.size

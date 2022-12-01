@@ -23,7 +23,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="반주기 설정"
+            android:text="@string/setting_brand"
             android:textSize="20sp"/>
 
         <RadioGroup
@@ -36,32 +36,33 @@
                 android:id="@+id/radio_tj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="태진"
+                android:text="@string/tj"
                 android:textSize="20sp"/>
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radio_kumyoung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="금영"
+                android:text="@string/kumyoung"
                 android:textSize="20sp"
                 android:layout_marginStart="12dp"/>
         </RadioGroup>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_reset_bookmark"
+            android:id="@+id/btn_reset_favorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="북마크 초기화"
+            android:text="@string/setting_reset"
             android:textSize="20sp"
             android:layout_marginTop="35dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_export_bookmark"
+            android:id="@+id/btn_export_favorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="북마크 목록 파일로 저장"
+            android:text="@string/setting_export"
             android:textSize="20sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 </LinearLayout>

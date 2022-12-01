@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_month"
+            android:id="@+id/spin_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2022년 10월"
+            android:text="@string/spin_month"
             android:textSize="17sp"
             android:padding="8dp"
             android:layout_gravity="center"
