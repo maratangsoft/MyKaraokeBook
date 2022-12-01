@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.maratangsoft.mykaraokebook.databinding.FragmentNewSongBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +37,22 @@ class NewSongFragment : Fragment() {
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
 
         initData()
+
+        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                if (!binding.recycler.canScrollVertically(1) && lastVisibleItemPosition == items.lastIndex){
+                    items.removeAt(items.lastIndex)
+                    binding.recycler.adapter?.notifyItemRemoved(items.lastIndex + 1)
+                    for (i in items.size until min(items.size+rowCount, result.size)){
+                        items.add(result[i])
+                        binding.recycler.adapter?.notifyItemInserted(i)
+                    }
+                }
+            }
+        })
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,14 +96,14 @@ class NewSongFragment : Fragment() {
                     response.body()?.let { result = it }
                     for (i in 0 until min(rowCount, result.size)) {
                         items.add(result[i])
+                        binding.recycler.adapter?.notifyItemInserted(i)
                     }
-                    binding.recycler.adapter?.notifyDataSetChanged()
+                    items.add(SongItem("","","","",null,null))
+                    binding.recycler.adapter?.notifyItemInserted(items.lastIndex)
                 }
-
                 override fun onFailure(call: Call<MutableList<SongItem>>, t: Throwable) {
                     AlertDialog.Builder(requireActivity()).setMessage(t.message).show()
                 }
-
             })
     }
 }
