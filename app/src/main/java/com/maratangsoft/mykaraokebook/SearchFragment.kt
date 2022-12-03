@@ -3,6 +3,7 @@ package com.maratangsoft.mykaraokebook
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,22 +39,7 @@ class SearchFragment : Fragment() {
         binding.btnSetting.setOnClickListener { startActivity(Intent(requireActivity(), SettingActivity::class.java)) }
         binding.recycler.adapter = SearchAdapter(requireActivity(), items)
         binding.et.setOnEditorActionListener { _, actionId, _ -> editorAction(actionId) }
-
-        binding.recycler.addOnScrollListener(object : OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-
-                if (!binding.recycler.canScrollVertically(1) && lastVisibleItemPosition == items.lastIndex){
-                    items.removeAt(items.lastIndex)
-                    binding.recycler.adapter?.notifyItemRemoved(items.lastIndex + 1)
-                    for (i in items.size until min(items.size+rowCount, result.size)){
-                        items.add(result[i])
-                        binding.recycler.adapter?.notifyItemInserted(i)
-                    }
-                }
-            }
-        })
+        binding.recycler.addOnScrollListener(OnScrollListener())
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,9 +81,10 @@ class SearchFragment : Fragment() {
         binding.recycler.adapter?.notifyDataSetChanged()
 
         val word = binding.et.text.toString().replace(" ", "")
-        RetrofitHelper.getInstance("https://api.manana.kr/").create(RetrofitService::class.java)
-            .loadSearchData(query, word, brand).enqueue(object: Callback<MutableList<SongItem>>{
-
+        RetrofitHelper.getInstance("https://api.manana.kr/")
+            .create(RetrofitService::class.java)
+            .loadSearchData(query, word, brand)
+            .enqueue(object: Callback<MutableList<SongItem>>{
                 override fun onResponse(call: Call<MutableList<SongItem>>, response: Response<MutableList<SongItem>>) {
                     if (response.body().isNullOrEmpty()) {
                         Toast.makeText(requireActivity(), "검색 결과가 없습니다!", Toast.LENGTH_SHORT).show()
@@ -115,5 +102,20 @@ class SearchFragment : Fragment() {
                     AlertDialog.Builder(requireActivity()).setMessage(t.message).show()
                 }
             })
+    }
+    inner class OnScrollListener: RecyclerView.OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+            if (!binding.recycler.canScrollVertically(1) && lastVisibleItemPosition == items.lastIndex && items.lastIndex != -1){
+                items.removeAt(items.lastIndex)
+                binding.recycler.adapter?.notifyItemRemoved(items.lastIndex + 1)
+                for (i in items.size until min(items.size+rowCount, result.size)){
+                    items.add(result[i])
+                    binding.recycler.adapter?.notifyItemInserted(i)
+                }
+            }
+        }
     }
 }
